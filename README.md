@@ -1,19 +1,5 @@
 # Požičovňa áut PABT
 
-
-
-Požičovňa áut PABT. Cieľom môjho projektu je program, ktorý by sa dal využiť pri prevádzke autopožičovne.  Na začiatku si uživatel určí, či bude ďalej pokračovať ako Employee alebo Customer. 
-
-
-Bezpečnosť -> údaje, ktoré zákazník zadá budú zabezpečené tak, aby sa k ním nedostal nikto cudzí.
-
-Spoľahlivosť -> Pri nedodržaní termínu vrátenia vozidla je osoba penalizovaná.
-
-
-
-
-# FINAL ODOVZDANIE - DOKUMENTÁCIA
-## Zámer projektu:
 Jedná sa aplikáciu požičovne áut s názvom PABT. Aplikácia, ktorá by sa dala využiť pri prevádzke auto požičovne. Používateľ si môže prenajať auto, pozrieť si svoju objednávku, prípadne auto vrátiť skôr. Keď sa prihlási zamestnanec, tak má k dispozícii zoznamy všetkých áut, požičaných a dostupných áut, zákazníkov a objednávok. Admin účet zamestnanca môže pridávať nových zamestnancov.
 
 
@@ -43,9 +29,9 @@ Použijem svoj login a heslo na prihlásenie sa do systému. Môžem si prezrie�
     ID: late2
 
 
-Tie posledné dva sú na otestovanie prípadu, keď zákazník ide vrátiť auto po stanovenom dátume.
+Posledné dva sú na otestovanie prípadu, keď zákazník ide vrátiť auto po stanovenom dátume.
 
-A ešte aj ID: skuska , toto ID je už na Banliste.
+ID "skuska" je na Banliste.
 
 S pozdravom,
 
