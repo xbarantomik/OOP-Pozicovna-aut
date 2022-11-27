@@ -13,10 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-public class AddEmployeeView  extends Application{
-	
+public class AddEmployeeView extends Application{
+
+	public static final Logger LOGGER = Logger.getLogger(AddEmployeeView.class.getName());
 	public AddEmployeeController controllerAddEmployee = new AddEmployeeController();
 	public CustomerView customerView = new CustomerView();
 	public CustomerController ControllerForCustomer = new CustomerController();
@@ -32,6 +35,7 @@ public class AddEmployeeView  extends Application{
 	public Button CancelBtn = new Button("Cancel");
 	public Button AddEmployeeBtn = new Button("Add Employee");
 	private ArrayList<Stage> addEmpStage = new ArrayList<>();
+	static final String FONT = "Cambria";
 
 
 	private void setLayout() {	
@@ -40,21 +44,21 @@ public class AddEmployeeView  extends Application{
 		AYSLb.setLayoutY(27);
 		AYSLb.setMinWidth(100);
 		AYSLb.setMinHeight(30);
-		AYSLb.setFont(new Font("Cambria", 22));
+		AYSLb.setFont(new Font(FONT, 22));
 		AYSLb.setVisible(true);
 		
 		WarningLb.setLayoutX(122);
 		WarningLb.setLayoutY(27);
 		WarningLb.setMinWidth(100);
 		WarningLb.setMinHeight(30);
-		WarningLb.setFont(new Font("Cambria", 22));
+		WarningLb.setFont(new Font(FONT, 22));
 		WarningLb.setVisible(false);
 		
 		Warning2Lb.setLayoutX(80);
 		Warning2Lb.setLayoutY(27);
 		Warning2Lb.setMinWidth(100);
 		Warning2Lb.setMinHeight(30);
-		Warning2Lb.setFont(new Font("Cambria", 22));
+		Warning2Lb.setFont(new Font(FONT, 22));
 		Warning2Lb.setVisible(false);
 		
 		NameTf.setLayoutX(110);
@@ -89,14 +93,14 @@ public class AddEmployeeView  extends Application{
 		CancelBtn.setLayoutY(270);
 		CancelBtn.setMinWidth(80);
 		CancelBtn.setMinHeight(30);
-		CancelBtn.setFont(new Font("Cambria", 20));
+		CancelBtn.setFont(new Font(FONT, 20));
 		CancelBtn.setVisible(true);
 		
 		AddEmployeeBtn.setLayoutX(195);
 		AddEmployeeBtn.setLayoutY(270);
 		AddEmployeeBtn.setMinWidth(100);
 		AddEmployeeBtn.setMinHeight(30);
-		AddEmployeeBtn.setFont(new Font("Cambria", 20));
+		AddEmployeeBtn.setFont(new Font(FONT, 20));
 		AddEmployeeBtn.setVisible(true);
 
 
@@ -131,8 +135,7 @@ public class AddEmployeeView  extends Application{
 				try {
 					primaryStage.close();
 				} catch(Exception e2) {
-					System.out.println("ERROR CancelBtn v AddEmployeeView");
-					e2.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR CancelBtn in AddEmployeeView", e2);
 				} 
 			});
 			
@@ -140,15 +143,13 @@ public class AddEmployeeView  extends Application{
 				try {
 					controllerAddEmployee.AddEmployee(NameTf.getText(), LoginTf.getText(), PassTf.getText(), Pass2Tf.getText());
 				} catch(Exception e3) {
-					System.out.println("ERROR AddEmployeeBtn v AddEmployeeView");
-					e3.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR AddEmployeeBtn in AddEmployeeView", e3);
 				} 	
 			});
 			
 			
 		} catch(Exception e) {
-			System.out.println("ERROR start v ReturnCar View");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "ERROR start in ReturnCar View", e);
 		} 	
 	}
 	

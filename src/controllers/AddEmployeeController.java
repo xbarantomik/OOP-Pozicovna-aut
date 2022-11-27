@@ -5,10 +5,13 @@ import exceptions.NotRegisteredCustomerException;
 import javafx.stage.Stage;
 import models.*;
 import view.AddEmployeeView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AddEmployeeController {
-	
-	
+
+	public static final Logger LOGGER = Logger.getLogger(AddEmployeeController.class.getName());
+
 	public AddEmployeeView viewAddEmployee = null;
 	public CustomerController ControllerForCustomer = new CustomerController();
 	public Employee forEmployee = new Employee();
@@ -29,7 +32,7 @@ public class AddEmployeeController {
 	}
 
 	public boolean CheckTextFields(String name, String login, String pass, String pass2) throws EmptyComboBoxException {
-		if (name.equals(null) || login.equals(null) || pass.equals(null) || pass2.equals(null) ||
+		if (name == null || login == null || pass == null || pass2 == null ||
 				name.equals("") || login.equals("") || pass.equals("") || pass2.equals("")) {
 			viewAddEmployee.WarningLb.setVisible(true);
 			viewAddEmployee.AYSLb.setVisible(false);
@@ -60,18 +63,14 @@ public class AddEmployeeController {
 				viewAddEmployee.closeThisStage();
 			}
 			
-		} catch(EmptyComboBoxException e3) {	
-		} catch(NotRegisteredCustomerException e3) {
-		} catch(Exception e3) {
-			System.out.println("ERROR AddEmployee v AddEmployeeController");
-			e3.printStackTrace();
+		} catch(EmptyComboBoxException | NotRegisteredCustomerException e3) {
+			LOGGER.log(Level.SEVERE, "ERROR AddEmployee v AddEmployeeController - EmptyComboBoxException or NotRegisteredCustomerException", e3);
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR AddEmployee v AddEmployeeController", e);
 		} 	
 	}
 	
 	public void SerializeEmployees() {
 		forEmployee.Serialize();
-		
 	}
-
-
 }

@@ -18,11 +18,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class NewCustomerView extends Application{
 
-	
+
+	public static final Logger LOGGER = Logger.getLogger(NewCustomerView.class.getName());
 	public CustomerController controllerForCustomer = new CustomerController();
 	public LoginView viewForLogin = new LoginView();
 	public AYSOrderController controllerForAreYouSureOrder = new AYSOrderController();
@@ -34,7 +37,6 @@ public class NewCustomerView extends Application{
 	private static ArrayList<Integer> car_days_combobox = new ArrayList<>();
 	private static ArrayList<Stage> closingStageNewCustomer = new ArrayList<>();
 	
-
 
 	public Label CustomerLabel = new Label("Register & Rent");
 	public Pane pane = new Pane();	
@@ -54,8 +56,9 @@ public class NewCustomerView extends Application{
 	public Label PriceLb = new Label("");
 	public static Label HiddenIDLb = new Label();
 	public Button PlaceOrderBtn = new Button("Place an Order");
-	
 	private String CarFromCB;
+	static final String FONT = "Cambria";
+	static final String TEXT_PROMPT_CHOOSE = "--- choose ---";
 
 	private void setLayout() {	
 		
@@ -63,33 +66,33 @@ public class NewCustomerView extends Application{
 		CustomerLabel.setLayoutY(30);
 		CustomerLabel.setMinWidth(100);
 		CustomerLabel.setMinHeight(30);
-		CustomerLabel.setFont(new Font("Cambria", 28));
+		CustomerLabel.setFont(new Font(FONT, 28));
 		
 		RegisterBtn.setLayoutX(87);
 		RegisterBtn.setLayoutY(286);
 		RegisterBtn.setMinWidth(100);
 		RegisterBtn.setMinHeight(30);
-		RegisterBtn.setFont(new Font("Cambria", 17));
+		RegisterBtn.setFont(new Font(FONT, 17));
 		RegisterBtn.setVisible(false);
 		
 		BackBtn.setLayoutX(40);
 		BackBtn.setLayoutY(410);
 		BackBtn.setMinWidth(80);
 		BackBtn.setMinHeight(30); 
-		BackBtn.setFont(new Font("Cambria", 20));
+		BackBtn.setFont(new Font(FONT, 20));
 		
 		NameTf.setLayoutX(40);
 		NameTf.setLayoutY(120);
 		NameTf.setMinWidth(80);
 		NameTf.setMinHeight(30);
-		NameTf.setFont(new Font("Cambria", 16));
+		NameTf.setFont(new Font(FONT, 16));
 		NameTf.setPromptText("Name");	
 		
 		IDTf.setLayoutX(40);
 		IDTf.setLayoutY(170);
 		IDTf.setMinWidth(80);
 		IDTf.setMinHeight(30);
-		IDTf.setFont(new Font("Cambria", 16));
+		IDTf.setFont(new Font(FONT, 16));
 		IDTf.setPromptText("ID");
 		IDTf.setText(view.LoginView.getCustomerIDTfText());
 		IDTf.setEditable(false);
@@ -98,14 +101,14 @@ public class NewCustomerView extends Application{
 		CreditTf.setLayoutY(220);
 		CreditTf.setMinWidth(80);
 		CreditTf.setMinHeight(30);
-		CreditTf.setFont(new Font("Cambria", 16));
-		CreditTf.setPromptText("Credit [€]");
+		CreditTf.setFont(new Font(FONT, 16));
+		CreditTf.setPromptText("Credit [â‚¬]");
 		
 		SaveInfoErrorLb.setLayoutX(35);
 		SaveInfoErrorLb.setLayoutY(340);
 		SaveInfoErrorLb.setMinWidth(100);
 		SaveInfoErrorLb.setMinHeight(30);
-		SaveInfoErrorLb.setFont(new Font("Cambria", 17));
+		SaveInfoErrorLb.setFont(new Font(FONT, 17));
 		SaveInfoErrorLb.setVisible(false);
 		
 		TypeOfCarCmb.setLayoutX(340);
@@ -119,7 +122,7 @@ public class NewCustomerView extends Application{
 		SUVCmb.setLayoutY(170);
 		SUVCmb.setMinWidth(200);
 		SUVCmb.setMinHeight(30);
-		SUVCmb.setPromptText("--- choose ---");
+		SUVCmb.setPromptText(TEXT_PROMPT_CHOOSE);
 		SUVCmb.setItems(FXCollections.observableArrayList(car_suv_combobox));
 		SUVCmb.setVisible(false);
 		
@@ -127,7 +130,7 @@ public class NewCustomerView extends Application{
 		SedanCmb.setLayoutY(170);
 		SedanCmb.setMinWidth(200);
 		SedanCmb.setMinHeight(30);
-		SedanCmb.setPromptText("--- choose ---");
+		SedanCmb.setPromptText(TEXT_PROMPT_CHOOSE);
 		SedanCmb.setItems(FXCollections.observableArrayList(car_sedan_combobox));
 		SedanCmb.setVisible(false);
 		
@@ -135,7 +138,7 @@ public class NewCustomerView extends Application{
 		ConvertibleCmb.setLayoutY(170);
 		ConvertibleCmb.setMinWidth(200);
 		ConvertibleCmb.setMinHeight(30);
-		ConvertibleCmb.setPromptText("--- choose ---");
+		ConvertibleCmb.setPromptText(TEXT_PROMPT_CHOOSE);
 		ConvertibleCmb.setItems(FXCollections.observableArrayList(car_convertible_combobox));
 		ConvertibleCmb.setVisible(false);
 		
@@ -143,7 +146,7 @@ public class NewCustomerView extends Application{
 		EmptyCmb.setLayoutY(170);
 		EmptyCmb.setMinWidth(200);
 		EmptyCmb.setMinHeight(30);
-		EmptyCmb.setPromptText("--- choose ---");
+		EmptyCmb.setPromptText(TEXT_PROMPT_CHOOSE);
 		EmptyCmb.getItems().addAll("--- choose a car type ---");
 		EmptyCmb.setVisible(true);
 		
@@ -159,14 +162,14 @@ public class NewCustomerView extends Application{
 		PriceBtn.setLayoutY(286);
 		PriceBtn.setMinWidth(100);
 		PriceBtn.setMinHeight(30);
-		PriceBtn.setFont(new Font("Cambria", 17));
+		PriceBtn.setFont(new Font(FONT, 17));
 		PriceBtn.setVisible(true);
 		
 		PriceLb.setLayoutX(385);
 		PriceLb.setLayoutY(347);
 		PriceLb.setMinWidth(80);
 		PriceLb.setMinHeight(30);
-		PriceLb.setFont(new Font("Cambria", 23));
+		PriceLb.setFont(new Font(FONT, 23));
 		PriceLb.setVisible(true);
 		
 		HiddenIDLb.setLayoutX(365);
@@ -180,7 +183,7 @@ public class NewCustomerView extends Application{
 		PlaceOrderBtn.setLayoutY(410);
 		PlaceOrderBtn.setMinWidth(100);
 		PlaceOrderBtn.setMinHeight(30); 
-		PlaceOrderBtn.setFont(new Font("Cambria", 20));
+		PlaceOrderBtn.setFont(new Font(FONT, 20));
 		PlaceOrderBtn.setDisable(false);
 		
 	}
@@ -239,15 +242,12 @@ public class NewCustomerView extends Application{
 				}
 			});
 
-			
-			
 			TypeOfCarCmb.setOnAction( e -> {
 				try {
 					CarFromCB = controllerForCustomer.TypeOfCarForComboBox();
 					
 				} catch(Exception e2) {
-					System.out.println("ERROR TypeOfCarCmb.setOnAction v NewCustomer View");
-					e2.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR TypeOfCarCmb.setOnAction in NewCustomer View", e2);
 				}
 			});
 			
@@ -258,12 +258,10 @@ public class NewCustomerView extends Application{
 					controllerForCustomer.CarPrice(CarFromCB, DaysCmb.getValue());
 					
 				} catch (EmptyComboBoxException moe) {
-					
+					LOGGER.log(Level.SEVERE, "ERROR PriceBtn.setOnAction in NewCustomer View - EmptyComboBoxException", moe);
 				} catch (Exception e3) {
-					System.out.println("ERROR PriceBtn.setOnAction v NewCustomer View");
-					e3.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR PriceBtn.setOnAction in NewCustomer View", e3);
 				}
-				
 			});
 			
 			PlaceOrderBtn.setOnAction( e -> {
@@ -272,9 +270,8 @@ public class NewCustomerView extends Application{
 					controllerForCustomer.CheckCustomerRegistration();
 					controllerForCustomer.CheckComboBox(CarFromCB);								
 					int SerialCarNumber = controllerForCustomer.CarPrice(CarFromCB, DaysCmb.getValue());
-					controllerForCustomer.CheckCreditAndPrice(CarFromCB, DaysCmb.getValue());	
-					controllerForCustomer.CustomerInfo(NameTf.getText(), Integer.valueOf(CreditTf.getText()), 
-										DaysCmb.getValue(), HiddenIDLb.getText(), SerialCarNumber);
+					controllerForCustomer.checkCreditAndPrice(CarFromCB);
+					controllerForCustomer.CustomerInfo(NameTf.getText(), Integer.parseInt(CreditTf.getText()),DaysCmb.getValue(), HiddenIDLb.getText(), SerialCarNumber);
 					RegisterBtn.setVisible(false);
 					NameTf.setEditable(false);
 					CreditTf.setEditable(false);
@@ -285,30 +282,20 @@ public class NewCustomerView extends Application{
 				} catch (NumberFormatException e3) {
 					SaveInfoErrorLb.setText("Correctly fill in all text fields!");
 					SaveInfoErrorLb.setVisible(true);
-				} catch (NotRegisteredCustomerException moe2) {
-					
-				} catch (EmptyComboBoxException moe1) {
-					
+				} catch (NotRegisteredCustomerException | EmptyComboBoxException moe2) {
+					LOGGER.log(Level.SEVERE, "ERROR PlaceOrderBtn in NewCustomer View - NotRegisteredCustomerException or EmptyComboBoxException", moe2);
 				} catch (Exception e2) {
-					System.out.println("ERROR PlaceOrderBtn v NewCustomer View");
-					e2.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR PlaceOrderBtn in NewCustomer View", e2);
 				}
-				
 			});
-
-			
 		} catch(Exception e) {
-			e.printStackTrace();
-		} 	
-		
+			LOGGER.log(Level.SEVERE, "", e);
+		}
 	}
 	
 	public void ClosingNCStage() {
 		closingStageNewCustomer.get(0).close();
 	}
-
-	
-	
 
 	public TextField getNameTf() {
 		return NameTf;
@@ -367,6 +354,4 @@ public class NewCustomerView extends Application{
 	public static String getHiddenIDLbText() {
 		return HiddenIDLb.getText();
 	}
-
-
 }

@@ -2,11 +2,13 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Sedan extends Car  implements Serializable{
 	
 	private static final long serialVersionUID = 3011267682884692650L;
-	
+	public static final Logger LOGGER = Logger.getLogger(Sedan.class.getName());
 	private static ArrayList<Car> cars_sedan = new ArrayList<>();
 
 	public Sedan(){
@@ -20,11 +22,13 @@ public class Sedan extends Car  implements Serializable{
 		this.setPriceFor3Days(Double.valueOf(priceFor3Days));
 		this.setSerialNumber(Integer.valueOf(serialNumber));
 	}
-	
+
+	@Override
 	public void IsAvailable() {
 		this.Available = true;
 	}
-	
+
+	@Override
 	public void IsNotAvailable() {
 		this.Available = false;
 	}
@@ -35,19 +39,16 @@ public class Sedan extends Car  implements Serializable{
 		try {
 			String fileName = "serialized/Serialized-SEDAN.txt";
 			serialize.Serialization.Update(getCars_SedanList(), fileName);
-		} catch(Exception e2) {
-			System.out.println("ERROR Serialize() v Sedan");
-			e2.printStackTrace();
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR Serialize() in Sedan", e);
 		} 
 	}
-	
+
+	@Override
 	public void addCar(Car car) {
-		
+		// overwrites a parent function (polymorphism)
 	}
-	
 
-
-	
 	public static ArrayList<Car> getCars_SedanList(){
 		return cars_sedan;
 	}

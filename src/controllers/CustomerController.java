@@ -10,16 +10,21 @@ import exceptions.NotRegisteredCustomerException;
 import models.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CustomerController{
 
-	
+	public static final Logger LOGGER = Logger.getLogger(CustomerController.class.getName());
 	public CustomerView customerView = null;
 	public NewCustomerView newCustomerView = null;
 	public Customer customer = new Customer();
 	public LoginController ControllerForLogin = new LoginController();
 	public AYSOrderView viewrForAreYouSureOrder = null;
 	public LoginView loginView = null;
+	static final String SUV = "SUV";
+	static final String SEDAN = "Sedan";
+	static final String CONVERTIBLE = "Convertible";
 	
 	private static ArrayList<Car> oneCarOnly = new ArrayList<>();
 	
@@ -55,7 +60,43 @@ public class CustomerController{
 			}
 		}
 	}
-	
+
+    private Car comboBoxConvertible(){
+        for (int i = 0; i < models.Convertible.getCars_ConverList().size(); i++) {
+            if (newCustomerView.getConvertible().equals(models.Convertible.getCars_ConverList().get(i).getBrand() + " " +
+                    models.Convertible.getCars_ConverList().get(i).getModel() + " (" +
+                    models.Convertible.getCars_ConverList().get(i).getYearOfProduction() + ")"))
+            {
+                return models.Convertible.getCars_ConverList().get(i);
+            }
+        }
+        return null;
+    }
+
+    private Car comboBoxSUV(){
+        for (int i = 0; i < models.SUV.getCars_SUVList().size(); i++) {
+            if (newCustomerView.getSUV().equals(models.SUV.getCars_SUVList().get(i).getBrand() + " " +
+                    models.SUV.getCars_SUVList().get(i).getModel() + " (" +
+                    models.SUV.getCars_SUVList().get(i).getYearOfProduction() + ")"))
+            {
+                return models.SUV.getCars_SUVList().get(i);
+            }
+        }
+        return null;
+    }
+
+    private Car comboBoxSedan(){
+        for (int i = 0; i < models.Sedan.getCars_SedanList().size(); i++) {
+            if (newCustomerView.getSedan().equals(models.Sedan.getCars_SedanList().get(i).getBrand() + " " +
+                    models.Sedan.getCars_SedanList().get(i).getModel() + " (" +
+                    models.Sedan.getCars_SedanList().get(i).getYearOfProduction() + ")"))
+            {
+                return models.Sedan.getCars_SedanList().get(i);
+            }
+        }
+        return null;
+    }
+
 	/**
 	 * hladanie object Car z vyznacenych moznosti v CB
 	 * @param carFromCB
@@ -63,47 +104,33 @@ public class CustomerController{
 	 */
 	public Car ComboBoxCar(String carFromCB) {
 		try {
-			Car TheCar = null;
+            Car theCar;
 			switch(carFromCB) {		//hladanie objektu typu Car vybraneho v ComboBox
-				case "Convertible":
-					for (int i = 0; i < models.Convertible.getCars_ConverList().size(); i++) {
-						if (newCustomerView.getConvertible().equals(models.Convertible.getCars_ConverList().get(i).getBrand() + " " + 
-																	models.Convertible.getCars_ConverList().get(i).getModel() + " (" + 
-																	models.Convertible.getCars_ConverList().get(i).getYearOfProduction() + ")")) 
-						{
-							TheCar = models.Convertible.getCars_ConverList().get(i);
-							return TheCar; 
-						}
-					}
+				case CONVERTIBLE:
+                    theCar = comboBoxConvertible();
+                    if (theCar != null){
+                        return theCar;
+                    }
 					break;
-				case "SUV":
-					for (int i = 0; i < models.SUV.getCars_SUVList().size(); i++) {
-						if (newCustomerView.getSUV().equals(models.SUV.getCars_SUVList().get(i).getBrand() + " " + 
-															models.SUV.getCars_SUVList().get(i).getModel() + " (" + 
-															models.SUV.getCars_SUVList().get(i).getYearOfProduction() + ")")) 
-						{
-							TheCar = models.SUV.getCars_SUVList().get(i);
-							return TheCar; 
-						}
-					}
+				case SUV:
+                    theCar = comboBoxSUV();
+                    if (theCar != null){
+                        return theCar;
+                    }
 					break;
-				case "Sedan":
-					for (int i = 0; i < models.Sedan.getCars_SedanList().size(); i++) {
-						if (newCustomerView.getSedan().equals(models.Sedan.getCars_SedanList().get(i).getBrand() + " " + 
-															models.Sedan.getCars_SedanList().get(i).getModel() + " (" + 
-															models.Sedan.getCars_SedanList().get(i).getYearOfProduction() + ")")) 
-						{
-							TheCar = models.Sedan.getCars_SedanList().get(i);
-							return TheCar; 
-						}
-					}
+				case SEDAN:
+                    theCar = comboBoxSedan();
+                    if (theCar != null){
+                        return theCar;
+                    }
+					break;
+				default:
 					break;
 			}
 			return null;
 		
 		}catch (Exception e) {
-			System.out.println("Error ComboBoxItems() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error ComboBoxItems() v CustomerController", e);
 			return null; 
 		}
 
@@ -124,14 +151,16 @@ public class CustomerController{
 			
 			if(days <= 3) {									//rucne 1 - 3
 				switch (days) {
-				case 1:
-					break;
-				case 2:
-					price *= 1.94;
-					break;
-				case 3:
-					price *= 2.53;
-					break;
+					case 1:
+						break;
+					case 2:
+						price *= 1.94;
+						break;
+					case 3:
+						price *= 2.53;
+						break;
+					default:
+						break;
 				}
 			}
 			else {
@@ -148,11 +177,10 @@ public class CustomerController{
 			
 			price = Math.round(price);
 			TheCar.setFinalPrice((int)Math.round(price));
-			newCustomerView.PriceLb.setText("Price: " + (int)price + " €");
+			newCustomerView.PriceLb.setText("Price: " + (int)price + "â‚¬ ?");
 			return TheCar.getSerialNumber();
 		}catch (Exception e) {
-			System.out.println("Error CarPrice() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error CarPrice() v CustomerController", e);
 			return -1;
 		}
 		
@@ -193,8 +221,7 @@ public class CustomerController{
 				view.NewCustomerView.getCar_days_comboboxList().add(i);
 			}
 		}catch (Exception e) {
-			System.out.println("Error ComboBoxItems() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error ComboBoxItems() v CustomerController", e);
 		}
 	}
 
@@ -206,7 +233,7 @@ public class CustomerController{
 	public String TypeOfCarForComboBox() {
 		try {
 			newCustomerView.getEmptyCmb().setVisible(false);
-			if (newCustomerView.getTypeOfCarCmb().getValue().equals("Sedan")) {
+			if (newCustomerView.getTypeOfCarCmb().getValue().equals(SEDAN)) {
 				newCustomerView.getSedanCmb().setVisible(true);
 				newCustomerView.getSUVCmb().setVisible(false);
 				newCustomerView.getSUVCmb().setValue(null);
@@ -214,7 +241,7 @@ public class CustomerController{
 				newCustomerView.getConvertibleCmb().setValue(null);
 				return newCustomerView.getTypeOfCarCmb().getValue();
 			}
-			else if (newCustomerView.getTypeOfCarCmb().getValue().equals("SUV")) {
+			else if (newCustomerView.getTypeOfCarCmb().getValue().equals(SUV)) {
 				newCustomerView.getSUVCmb().setVisible(true);
 				newCustomerView.getSedanCmb().setVisible(false);
 				newCustomerView.getSedanCmb().setValue(null);
@@ -222,7 +249,7 @@ public class CustomerController{
 				newCustomerView.getConvertibleCmb().setValue(null);
 				return newCustomerView.getTypeOfCarCmb().getValue();
 			}
-			else if (newCustomerView.getTypeOfCarCmb().getValue().equals("Convertible")) {
+			else if (newCustomerView.getTypeOfCarCmb().getValue().equals(CONVERTIBLE)) {
 				newCustomerView.getConvertibleCmb().setVisible(true);
 				newCustomerView.getSedanCmb().setVisible(false);
 				newCustomerView.getSedanCmb().setValue(null);
@@ -232,8 +259,7 @@ public class CustomerController{
 			}		
 			return null;
 		}catch (Exception e) {
-			System.out.println("Error TypeOfCarForComboBox() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error TypeOfCarForComboBox() v CustomerController", e);
 			return null;
 		}
 	}
@@ -251,27 +277,29 @@ public class CustomerController{
 			 throw new EmptyComboBoxException("Choose what type of car");
 		 }
 		 switch (carType) {
-		 case "SUV":
-			if(newCustomerView.getSUVCmb().getSelectionModel().isEmpty()) {
-				newCustomerView.SaveInfoErrorLb.setText("Choose a SUV");
-				newCustomerView.SaveInfoErrorLb.setVisible(true);
-				throw new EmptyComboBoxException("Choose a SUV");
-			}
-			break;
-		 case "Sedan":
-			 if(newCustomerView.getSedanCmb().getSelectionModel().isEmpty()) {
-				newCustomerView.SaveInfoErrorLb.setText("Choose a Sedan");
-				newCustomerView.SaveInfoErrorLb.setVisible(true);
-				throw new EmptyComboBoxException("Choose a Sedan");
-			 }
-			 break;
-		 case "Convertible":
-			 if(newCustomerView.getConvertibleCmb().getSelectionModel().isEmpty()) {
-				newCustomerView.SaveInfoErrorLb.setText("Choose a Convertible");
-				newCustomerView.SaveInfoErrorLb.setVisible(true);
-				throw new EmptyComboBoxException("Choose a Convertible");
-			 }
-			 break;
+			 case SUV:
+				if(newCustomerView.getSUVCmb().getSelectionModel().isEmpty()) {
+					newCustomerView.SaveInfoErrorLb.setText("Choose a SUV");
+					newCustomerView.SaveInfoErrorLb.setVisible(true);
+					throw new EmptyComboBoxException("Choose a SUV");
+				}
+				break;
+			 case SEDAN:
+				 if(newCustomerView.getSedanCmb().getSelectionModel().isEmpty()) {
+					newCustomerView.SaveInfoErrorLb.setText("Choose a Sedan");
+					newCustomerView.SaveInfoErrorLb.setVisible(true);
+					throw new EmptyComboBoxException("Choose a Sedan");
+				 }
+				 break;
+			 case CONVERTIBLE:
+				 if(newCustomerView.getConvertibleCmb().getSelectionModel().isEmpty()) {
+					newCustomerView.SaveInfoErrorLb.setText("Choose a Convertible");
+					newCustomerView.SaveInfoErrorLb.setVisible(true);
+					throw new EmptyComboBoxException("Choose a Convertible");
+				 }
+				 break;
+			 default:
+				 break;
 		 }
 		 if(newCustomerView.getDaysCmb().getSelectionModel().isEmpty()) {
 			newCustomerView.SaveInfoErrorLb.setText("Choose for how many days");
@@ -295,10 +323,9 @@ public class CustomerController{
 	/**
 	 * Exception na malo Creditu oproti vypocitenej ceny
 	 * @param carFromCB
-	 * @param days
 	 * @throws EmptyComboBoxException
 	 */
-	public void CheckCreditAndPrice(String carFromCB, int days) throws EmptyComboBoxException{
+	public void checkCreditAndPrice(String carFromCB) throws EmptyComboBoxException{
 
 		Car TheCar = ComboBoxCar(carFromCB);
 		if(TheCar.getFinalPrice() > Integer.valueOf(newCustomerView.getCreditTf().getText())) {
@@ -319,15 +346,15 @@ public class CustomerController{
 	public void CustomerOrderLayout(String ID) {
 		try {
 			Order order = FindOrder(ID);
-			User customer = models.Customer.getCustomerList().get(models.Customer.FindCustomerIndex(ID));
+			User userCustomer = models.Customer.getCustomerList().get(models.Customer.FindCustomerIndex(ID));
 			
-			if(customer.getHasCar()) {	//zakaznik ma pozicane auto
+			if(userCustomer.getHasCar()) {	//zakaznik ma pozicane auto
 				customerView.NameLb.setText(order.getName());
 				customerView.IDLb.setText(order.getID());
 				customerView.CredtidLb.setText(String.valueOf(order.getCredit()));
 				customerView.CarLb.setText(order.getBrand() + " " + order.getModel() + " (" + order.getYearOfProduction() + ")");
 				customerView.DaysLeft.setText(String.valueOf(CheckDate(ID)));
-				
+
 			}else {						//zakaznik nema pozicane auto
 				customerView.NameLb.setText(order.getName());
 				customerView.IDLb.setText(order.getID());
@@ -335,15 +362,12 @@ public class CustomerController{
 				customerView.ReturnCarBtn.setVisible(false);
 				customerView.CarLb2.setVisible(false);
 				customerView.NoCarLb.setVisible(true);
-	
 			}
 		}catch (Exception e) {
-			System.out.println("Error CustomerOrderLayout() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error CustomerOrderLayout() v CustomerController", e);
 		}
 	}
-	
-	
+
 	public Order FindOrder(String ID) {
 		try {
 			for(int i = 0; i < models.Order.getOrderList().size(); i++) {
@@ -355,19 +379,16 @@ public class CustomerController{
 			return null;
 			
 		}catch (Exception e) {
-			System.out.println("Error FindOrder() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error FindOrder() in CustomerController", e);
 			return null;
 		}
 	}
 
 	public void ReturnCar() {
 		try {
-			
-			
+			LOGGER.info("ReturnCar() v CustomerController - returning car");
 		}catch (Exception e) {
-			System.out.println("Error ReturnCar() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error ReturnCar() in CustomerController", e);
 		}
 	}
 	
@@ -387,8 +408,7 @@ public class CustomerController{
 				return false;
 			
 		}catch (Exception e) {
-			System.out.println("Error CheckDate() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error CheckDate() in CustomerController", e);
 			return false;
 		}
 	}
@@ -406,23 +426,12 @@ public class CustomerController{
 			
 			return (days - daysdiff);
 		}catch (Exception e) {
-			System.out.println("Error CheckDate() v CustomerController");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error CheckDate() in CustomerController", e);
 			return -1;
 		}
 	}
-	
-	
-	
-	//-----getters and setters
-	
+
 	public ArrayList<Car> getOneCarOnly(){
 		return oneCarOnly;
 	}
-
-
-
-
-
-	
 }

@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.Iterator;
 import interfaces.IDate;
 import interfaces.ISerializeUpdate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Order implements Serializable, IDate, ISerializeUpdate{
 
 	private static final long serialVersionUID = 2369357396475779277L;
-	
-	
+	public static final Logger LOGGER = Logger.getLogger(Order.class.getName());
+
 	private static ArrayList<Order> orderList = new ArrayList<>();
 	
 	
@@ -44,7 +46,7 @@ public class Order implements Serializable, IDate, ISerializeUpdate{
 		this.YearOfProduction = car.getYearOfProduction();
 		this.Price = car.getFinalPrice();
 		this.Deposit = car.getDeposit();
-		this.getdate();
+		this.setNewDate();
 		this.ForHowLong = customer.getDays();
 		this.CarSerialNumber = car.getSerialNumber();
 		this.CarType = car.getCarType();
@@ -52,7 +54,7 @@ public class Order implements Serializable, IDate, ISerializeUpdate{
 	
 
 	@Override
-	public void getdate() {
+	public void setNewDate() {
 		this.Date = new Date();
 	}
 
@@ -62,10 +64,9 @@ public class Order implements Serializable, IDate, ISerializeUpdate{
 		try {
 			String fileName = "serialized/Serialized-ORDERS.txt";
 			serialize.Serialization.Update(getOrderList(), fileName);
-		} catch(Exception e2) {
-			System.out.println("ERROR Update() v Order");
-			e2.printStackTrace();
-		} 
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR Update() v Order", e);
+		}
 	}
 
 
@@ -176,6 +177,4 @@ public class Order implements Serializable, IDate, ISerializeUpdate{
 	public void setCarType(String carType) {
 		this.CarType = carType;
 	}
-
-	
 }

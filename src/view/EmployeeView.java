@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class EmployeeView extends Application{
-	
+
 	public EmployeeController ControllerForEmployee = new EmployeeController();
 	public AddEmployeeController controllerAddEmployee = new AddEmployeeController();
 	public LoginView viewForLogin = new LoginView();
@@ -32,7 +32,7 @@ public class EmployeeView extends Application{
 	public Button PrintOrdersBtn = new Button("Orders");
 	public static Label HPaLb = new Label();
 	public static Label HLoLB = new Label();
-
+	static final String FONT = "Cambria";
 
 	private void setLayout() {	
 		
@@ -40,77 +40,73 @@ public class EmployeeView extends Application{
 		EmployeeLabel.setLayoutY(30);
 		EmployeeLabel.setMinWidth(100);
 		EmployeeLabel.setMinHeight(30);
-		EmployeeLabel.setFont(new Font("Cambria", 28));
+		EmployeeLabel.setFont(new Font(FONT, 28));
 		
 		OutPutTa.setLayoutX(250);
 		OutPutTa.setLayoutY(120);
 		OutPutTa.setMaxWidth(320);
 		OutPutTa.setMinHeight(290);
-		OutPutTa.setFont(new Font("Cambria", 14));
+		OutPutTa.setFont(new Font(FONT, 14));
 		OutPutTa.setEditable(false);
 		
 		AllCarBtn.setLayoutX(40);
 		AllCarBtn.setLayoutY(120);
 		AllCarBtn.setMinWidth(105);
 		AllCarBtn.setMinHeight(20);
-		AllCarBtn.setFont(new Font("Cambria", 15));
+		AllCarBtn.setFont(new Font(FONT, 15));
 		
 		AvailableCarBtn.setLayoutX(40);
 		AvailableCarBtn.setLayoutY(165);
 		AvailableCarBtn.setMinWidth(105);
 		AvailableCarBtn.setMaxHeight(20);
-		AvailableCarBtn.setFont(new Font("Cambria", 15));
+		AvailableCarBtn.setFont(new Font(FONT, 15));
 		
 		UnavailableCarBtn.setLayoutX(40);
 		UnavailableCarBtn.setLayoutY(210);
 		UnavailableCarBtn.setMinWidth(105);
 		UnavailableCarBtn.setMaxHeight(20);
-		UnavailableCarBtn.setFont(new Font("Cambria", 15));
+		UnavailableCarBtn.setFont(new Font(FONT, 15));
 		
 		BackBtn.setLayoutX(40);
 		BackBtn.setLayoutY(370);
 		BackBtn.setMinWidth(80);
 		BackBtn.setMinHeight(20);
-		BackBtn.setFont(new Font("Cambria", 20));
+		BackBtn.setFont(new Font(FONT, 20));
 		
 		AddEmployeesBtn.setLayoutX(490);
 		AddEmployeesBtn.setLayoutY(30);
 		AddEmployeesBtn.setMinWidth(80);
 		AddEmployeesBtn.setMaxHeight(20);
-		AddEmployeesBtn.setFont(new Font("Cambria", 15));
+		AddEmployeesBtn.setFont(new Font(FONT, 15));
 		AddEmployeesBtn.setVisible(false);
 		
 		PrintCustomersBtn.setLayoutX(40);
 		PrintCustomersBtn.setLayoutY(255);
 		PrintCustomersBtn.setMinWidth(80);
 		PrintCustomersBtn.setMaxHeight(20);
-		PrintCustomersBtn.setFont(new Font("Cambria", 15));
+		PrintCustomersBtn.setFont(new Font(FONT, 15));
 		PrintCustomersBtn.setVisible(true);
 		
 		PrintOrdersBtn.setLayoutX(40);
 		PrintOrdersBtn.setLayoutY(300);
 		PrintOrdersBtn.setMinWidth(80);
 		PrintOrdersBtn.setMaxHeight(20);
-		PrintOrdersBtn.setFont(new Font("Cambria", 15));
+		PrintOrdersBtn.setFont(new Font(FONT, 15));
 		PrintOrdersBtn.setVisible(true);
 		
 		HPaLb.setLayoutX(40);
 		HPaLb.setLayoutY(370);
 		HPaLb.setMinWidth(80);
 		HPaLb.setMinHeight(30);
-		HPaLb.setFont(new Font("Cambria", 20));
+		HPaLb.setFont(new Font(FONT, 20));
 		HPaLb.setVisible(false);
 		
 		HLoLB.setLayoutX(40);
 		HLoLB.setLayoutY(370);
 		HLoLB.setMinWidth(80);
 		HLoLB.setMinHeight(30);
-		HLoLB.setFont(new Font("Cambria", 20));
+		HLoLB.setFont(new Font(FONT, 20));
 		HLoLB.setVisible(false);
-		
-
-		
-		
 	}
 	
 	private void registerChildren(){
@@ -152,35 +148,22 @@ public class EmployeeView extends Application{
 				primaryStage.close();
 			});
 			
-			AllCarBtn.setOnAction(e -> {
-				ControllerForEmployee.CarsArrayPrintOutAll();
-			});
+			AllCarBtn.setOnAction(e -> ControllerForEmployee.CarsArrayPrintOutAll());
 			
-			AvailableCarBtn.setOnAction(e -> {
-				ControllerForEmployee.CarsArrayPrintOutAvailable();
-			});
+			AvailableCarBtn.setOnAction(e -> ControllerForEmployee.CarsArrayPrintOutAvailable());
 			
-			UnavailableCarBtn.setOnAction(e -> {
-				ControllerForEmployee.CarsArrayPrintOutUnavailable();
-			});
+			UnavailableCarBtn.setOnAction(e -> ControllerForEmployee.CarsArrayPrintOutUnavailable());
 			
-			AddEmployeesBtn.setOnAction(e -> {
-				controllerAddEmployee.StartAddEmployeeSession();
-			});
+			AddEmployeesBtn.setOnAction(e -> controllerAddEmployee.StartAddEmployeeSession());
 			
-			PrintCustomersBtn.setOnAction(e -> {
-				ControllerForEmployee.CustomersArrayPrintOut();
-			});
+			PrintCustomersBtn.setOnAction(e -> ControllerForEmployee.CustomersArrayPrintOut());
 			
-			PrintOrdersBtn.setOnAction(e -> {
-				ControllerForEmployee.OrderArrayPrintOut();
-			});
+			PrintOrdersBtn.setOnAction(e -> ControllerForEmployee.OrderArrayPrintOut());
 			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-		} 	
-		
+		}
 	}
 	
 	
@@ -190,5 +173,4 @@ public class EmployeeView extends Application{
 	public static String getHPaLb() {
 		return HPaLb.getText();
 	}
-
 }

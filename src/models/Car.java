@@ -20,28 +20,22 @@ public class Car implements IAvailAble, Serializable, ISerializeUpdate{
 	protected int SerialNumber;
 	protected String CarType;
 	protected int IndexInArrayList;
-
-
 	
 	public void IsAvailable() {
-		
+		// will be overwritten (polymorphism)
 	}
 	
 	public void IsNotAvailable() {
-
-	}
-	
-	public Car() {
-		
+		// will be overwritten (polymorphism)
 	}
 
 	public void addCar(Car car) {
-		
+		// will be overwritten (polymorphism)
 	}
 	
 	@Override
 	public void Serialize() {
-
+		// will be overwritten (polymorphism)
 	}
 
 	
@@ -111,9 +105,4 @@ public class Car implements IAvailAble, Serializable, ISerializeUpdate{
 	public void setIndexInArrayList(int indexInArrayList) {
 		this.IndexInArrayList = indexInArrayList;
 	}
-
-	
-	
-	
-	
 }

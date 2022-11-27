@@ -1,17 +1,19 @@
 package controllers;
 
+import utils.StaticDb;
 import view.AYSOrderView;
 import javafx.stage.Stage;
 import view.NewCustomerView;
 import controllers.CustomerController;
 import exceptions.NotRegisteredCustomerException;
 import models.*;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class AYSOrderController{
-	
 
+	public static final Logger LOGGER = Logger.getLogger(AYSOrderController.class.getName());
 	public AYSOrderView viewForAreYouSureOrderView = null;
 	public NewCustomerView newCustomerView = null;
 	public CustomerController ControllerForCustomer = new CustomerController();
@@ -37,9 +39,8 @@ public class AYSOrderController{
 			CheckCarForNull(car);
 			car.setDeposit(0);
 			
-		}catch(Exception e2) {							
-			System.out.println("ERROR ChosenCar v AreYouSureOrder Controller");
-			e2.printStackTrace();
+		}catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR ChosenCar v AreYouSureOrder Controller", e);
 		}
 	}
 
@@ -51,16 +52,16 @@ public class AYSOrderController{
 			CheckCarForNull(car);
 			
 			viewForAreYouSureOrderView.setCarLbText(car.getBrand() + " " + car.getModel() + " (" + car.getYearOfProduction() + ")");
-			viewForAreYouSureOrderView.setPriceLbText(car.getFinalPriceString() + " €");
+			viewForAreYouSureOrderView.setPriceLbText(car.getFinalPriceString() + " â‚¬");
 			
 			int credit = customer.getCredit();
 			int deposit = CalculateDeposit(car.getFinalPrice());
 			int price =  car.getFinalPrice();
 			String days = String.valueOf(customer.getDays());
 			
-			viewForAreYouSureOrderView.setCreditLbText(credit + " €");
-			viewForAreYouSureOrderView.setDepositLbText(deposit + " €");
-			viewForAreYouSureOrderView.setOverallLbText((price + deposit) + " €");
+			viewForAreYouSureOrderView.setCreditLbText(credit + " â‚¬");
+			viewForAreYouSureOrderView.setDepositLbText(deposit + " â‚¬");
+			viewForAreYouSureOrderView.setOverallLbText((price + deposit) + " â‚¬");
 			viewForAreYouSureOrderView.setForDaysLb("Days:  " + days);
 
 			car.setDeposit(deposit);
@@ -69,9 +70,8 @@ public class AYSOrderController{
 				viewForAreYouSureOrderView.NotEnoughCreditLb.setVisible(true);
 			}
 
-		}catch(Exception e2) {							
-			System.out.println("ERROR ChosenCar v AreYouSureOrder Controller");
-			e2.printStackTrace();
+		}catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR ChosenCar v AreYouSureOrder Controller", e);
 		}
 	}
 	
@@ -106,9 +106,8 @@ public class AYSOrderController{
 					}
 				}
 			return null;
-		}catch(Exception e2) {							
-			System.out.println("ERROR FindCar v AreYouSureOrder Controller");
-			e2.printStackTrace();
+		}catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR FindCar v AreYouSureOrder Controller", e);
 			return null;
 		}
 		
@@ -144,10 +143,10 @@ public class AYSOrderController{
 			
 			Serialize();
 			
-		}catch(NotRegisteredCustomerException e2) {	
-		}catch(Exception e2) {							
-			System.out.println("ERROR CreateOrder v AreYouSureOrder Controller");
-			e2.printStackTrace();
+		}catch(NotRegisteredCustomerException e2) {
+			LOGGER.log(Level.SEVERE, "ERROR CreateOrder v AreYouSureOrder Controller - NotRegisteredCustomerException", e2);
+		}catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR CreateOrder v AreYouSureOrder Controller", e);
 		}
 	}
 	
@@ -158,7 +157,4 @@ public class AYSOrderController{
 		sedanFor.Serialize();			
 		converFor.Serialize();
 	}
-
-
-	
 }

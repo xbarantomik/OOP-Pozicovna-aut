@@ -9,9 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReturnCarLateView extends Application{
-	
+
+	public static final Logger LOGGER = Logger.getLogger(ReturnCarLateView.class.getName());
 	public ReturnCarController controllerReturnCar = new ReturnCarController();
 	public CustomerView customerView = new CustomerView();
 	public CustomerController ControllerForCustomer = new CustomerController();
@@ -22,6 +25,7 @@ public class ReturnCarLateView extends Application{
 	public Pane pane = new Pane();	
 	public Button OKBtn = new Button("OK");
 	public static Label HiddenIDLb = new Label("");
+	static final String FONT = "Cambria";
 
 
 	private void setLayout() {	
@@ -30,28 +34,28 @@ public class ReturnCarLateView extends Application{
 		AYSLb.setLayoutY(18);
 		AYSLb.setMinWidth(100);
 		AYSLb.setMinHeight(30);
-		AYSLb.setFont(new Font("Cambria", 26));
+		AYSLb.setFont(new Font(FONT, 26));
 		AYSLb.setVisible(true);
 		
 		Mgs1Lb.setLayoutX(22);
 		Mgs1Lb.setLayoutY(91);
 		Mgs1Lb.setMinWidth(100);
 		Mgs1Lb.setMinHeight(10);
-		Mgs1Lb.setFont(new Font("Cambria", 17));
+		Mgs1Lb.setFont(new Font(FONT, 17));
 		Mgs1Lb.setVisible(true);
 		
 		Mgs2Lb.setLayoutX(22);
 		Mgs2Lb.setLayoutY(131);
 		Mgs2Lb.setMinWidth(100);
 		Mgs2Lb.setMinHeight(10);
-		Mgs2Lb.setFont(new Font("Cambria", 17));
+		Mgs2Lb.setFont(new Font(FONT, 17));
 		Mgs2Lb.setVisible(true);
 
 		OKBtn.setLayoutX(275);
 		OKBtn.setLayoutY(185);
 		OKBtn.setMinWidth(80);
 		OKBtn.setMinHeight(30);
-		OKBtn.setFont(new Font("Cambria", 23));
+		OKBtn.setFont(new Font(FONT, 23));
 		OKBtn.setVisible(true);
 
 		HiddenIDLb.setLayoutX(10);
@@ -89,14 +93,12 @@ public class ReturnCarLateView extends Application{
 					primaryStage.close();
 					
 				} catch(Exception e2) {
-					System.out.println("ERROR CancelBtn v AreYouSure View");
-					e2.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR CancelBtn v AreYouSure View", e2);
 				} 
 			});
 			
 		} catch(Exception e) {
-			System.out.println("ERROR start v ReturnCarLate View");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "ERROR start v ReturnCarLate View", e);
 		} 	
 	}
 }

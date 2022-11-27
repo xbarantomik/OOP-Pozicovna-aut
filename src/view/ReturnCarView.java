@@ -10,9 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReturnCarView extends Application{
-	
+
+	public static final Logger LOGGER = Logger.getLogger(ReturnCarView.class.getName());
 	public ReturnCarController controllerReturnCar = new ReturnCarController();
 	public CustomerView customerView = new CustomerView();
 	public CustomerController ControllerForCustomer = new CustomerController();
@@ -27,6 +30,7 @@ public class ReturnCarView extends Application{
 	public Button LeaveCreditBtn = new Button("Leave Credit");
 	public Button TakeCreditBtn = new Button("Take Credit");
 	public static Label HiddenIDLb = new Label("");
+	static final String FONT = "Cambria";
 
 
 	private void setLayout() {	
@@ -35,35 +39,35 @@ public class ReturnCarView extends Application{
 		AYSLb.setLayoutY(18);
 		AYSLb.setMinWidth(100);
 		AYSLb.setMinHeight(30);
-		AYSLb.setFont(new Font("Cambria", 26));
+		AYSLb.setFont(new Font(FONT, 26));
 		AYSLb.setVisible(true);
 		
 		Mgs1Lb.setLayoutX(22);
 		Mgs1Lb.setLayoutY(91);
 		Mgs1Lb.setMinWidth(100);
 		Mgs1Lb.setMinHeight(10);
-		Mgs1Lb.setFont(new Font("Cambria", 17));
+		Mgs1Lb.setFont(new Font(FONT, 17));
 		Mgs1Lb.setVisible(true);
 		
 		Mgs2Lb.setLayoutX(22);
 		Mgs2Lb.setLayoutY(131);
 		Mgs2Lb.setMinWidth(100);
 		Mgs2Lb.setMinHeight(10);
-		Mgs2Lb.setFont(new Font("Cambria", 17));
+		Mgs2Lb.setFont(new Font(FONT, 17));
 		Mgs2Lb.setVisible(false);
 
 		CancelBtn.setLayoutX(40);
 		CancelBtn.setLayoutY(215);
 		CancelBtn.setMinWidth(80);
 		CancelBtn.setMinHeight(30);
-		CancelBtn.setFont(new Font("Cambria", 23));
+		CancelBtn.setFont(new Font(FONT, 23));
 		CancelBtn.setVisible(true);
 		
 		LeaveCreditBtn.setLayoutX(420);
 		LeaveCreditBtn.setLayoutY(230);
 		LeaveCreditBtn.setMinWidth(100);
 		LeaveCreditBtn.setMinHeight(30);
-		LeaveCreditBtn.setFont(new Font("Cambria", 23));
+		LeaveCreditBtn.setFont(new Font(FONT, 23));
 		LeaveCreditBtn.setVisible(false);
 		
 		HiddenIDLb.setLayoutX(10);
@@ -77,11 +81,10 @@ public class ReturnCarView extends Application{
 		TakeCreditBtn.setLayoutY(215);
 		TakeCreditBtn.setMinWidth(100);
 		TakeCreditBtn.setMinHeight(30);
-		TakeCreditBtn.setFont(new Font("Cambria", 23));
+		TakeCreditBtn.setFont(new Font(FONT, 23));
 		TakeCreditBtn.setVisible(true);
-
-
 	}
+
 	private void registerChildren(){
 		
 		pane.getChildren().add(AYSLb);
@@ -109,8 +112,7 @@ public class ReturnCarView extends Application{
 					primaryStage.close();
 					
 				} catch(Exception e2) {
-					System.out.println("ERROR CancelBtn v AreYouSure View");
-					e2.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR CancelBtn in AreYouSure View", e2);
 				} 
 			});
 			
@@ -121,15 +123,11 @@ public class ReturnCarView extends Application{
 					customerView.ClosingROStage();
 					
 				} catch(Exception e3) {
-					System.out.println("ERROR TakeCreditBtn v ReturnCar View");
-					e3.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR TakeCreditBtn in ReturnCar View", e3);
 				} 	
 			});
-			
-			
 		} catch(Exception e) {
-			System.out.println("ERROR start v ReturnCar View");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "ERROR start v ReturnCar View", e);
 		} 	
 	}
 }

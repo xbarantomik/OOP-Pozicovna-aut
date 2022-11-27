@@ -7,36 +7,33 @@ import models.Order;
 import view.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginController implements Serializable{
 
 	private static final long serialVersionUID = 8940767725827848793L;
 	private static ArrayList<Integer> customerIndexForView = new ArrayList<>();
+	public static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
 	
 	private int IndexOfSelectedCustomer;
-	
 	public LoginView loginView = null;
-	public CustomerView customerView = null;
-	public Customer forCustomer = null; 
-	
 	
 	public void SetupView(LoginView view) { 
 		this.loginView = view;
 	}
 	
-	
 	public void StartCustomerSession(boolean NewCustomer) {
 		if(NewCustomer) {
-			new NewCustomerView().start(new Stage());;
+			new NewCustomerView().start(new Stage());
 		}
 		else {
-			new CustomerView().start(new Stage());;
+			new CustomerView().start(new Stage());
 		}
 	}
 	
-	
 	public void StartEmployeeSession() {
-		new EmployeeView().start(new Stage());;
+		new EmployeeView().start(new Stage());
 	}
 	
 	public static void OrderArrayPrintOut() {
@@ -74,7 +71,7 @@ public class LoginController implements Serializable{
 	public void TryLoginCustomer(String cisloOP) {
 		
 		try {
-			if(view.LoginView.getCustomerIDTf().getText().isEmpty() || (view.LoginView.getCustomerIDTfText() == "")) {
+			if(view.LoginView.getCustomerIDTf().getText().isEmpty() || (view.LoginView.getCustomerIDTfText() != null && view.LoginView.getCustomerIDTfText().equals(""))) {
 				view.LoginView.setCustomerIDTf("");
 				return;
 			}
@@ -107,8 +104,7 @@ public class LoginController implements Serializable{
 			newCustomer.LogInNewCustomer(this);
 		
 		}catch(Exception e) {
-			System.out.println("Error TryLoginCustomer");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error TryLoginCustomer", e);
 		}
 	}
 	
@@ -124,14 +120,12 @@ public class LoginController implements Serializable{
 				models.SUV.setCars_SUVList(utils.StaticDb.DeserializeCar("serialized/Serialized-SUV.txt"));
 				models.Sedan.setCars_SedanList(utils.StaticDb.DeserializeCar("serialized/Serialized-SEDAN.txt"));
 				models.Convertible.setCars_ConverList(utils.StaticDb.DeserializeCar("serialized/Serialized-CONVERTIBLE.txt"));
-			} catch (Exception e2) {
-				System.out.println("ERROR Initializer v LoginCustomer");
-				e2.printStackTrace();
+			} catch (Exception e) {
+				LOGGER.log(Level.SEVERE, "ERROR Initializer v LoginCustomer", e);
 			}
 		}).start();
 	}
-	  
-	
+
 	public int getCustomerIndex() {
 		return IndexOfSelectedCustomer;
 	}	
@@ -141,7 +135,4 @@ public class LoginController implements Serializable{
 	public static ArrayList<Integer> getcustomerIndexForView(){
 		return customerIndexForView;
 	}
-
-
-
 }

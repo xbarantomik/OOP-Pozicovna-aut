@@ -47,31 +47,31 @@ public class User implements Serializable, ISerializeUpdate{
 	}
 	
 	public void delUser(int index) {
-		System.out.println("deluser user");
+		// will be overwritten (polymorphism)
 	}
+
 	public void GetTime() {
-		
+		// will be overwritten (polymorphism)
 	}
-	
-	
+
 	public void addDepositToCredit(Order order) {
-	
+		// will be overwritten (polymorphism)
 	}
 	
 	protected void LogInSpecific(boolean b) {
-		
+		// will be overwritten (polymorphism)
 	}
 	
 	@Override
 	public void Serialize() {
-
+		// will be overwritten (polymorphism)
 	}
 	
 	public void SerializeBanList() {
-		
+		// will be overwritten (polymorphism)
 	}
 	public void AddToBanList(User customer) {
-		
+		// will be overwritten (polymorphism)
 	}
 	
 
@@ -129,9 +129,5 @@ public class User implements Serializable, ISerializeUpdate{
 	public void setCarSerialNumber(int carSerialNumber) {
 		this.CarSerialNumber = carSerialNumber;
 	}
-
-
-
-	
 }
 

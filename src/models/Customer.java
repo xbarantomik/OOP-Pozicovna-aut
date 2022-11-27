@@ -3,12 +3,14 @@ package models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Customer extends User implements Serializable{
 	
 
 	private static final long serialVersionUID = -3963819229986716453L;
-	
+	public static final Logger LOGGER = Logger.getLogger(Customer.class.getName());
 	private static ArrayList<User> customers = new ArrayList<>();
 	private static ArrayList<String> banList = new ArrayList<>();
 	
@@ -26,7 +28,8 @@ public class Customer extends User implements Serializable{
 		this.setID(id);
 		this.setCredit(Integer.valueOf(credit));
 	}
-	
+
+	@Override
 	public void delUser(int index) {
 		Iterator<User> itr = customers.iterator();
 		while(itr.hasNext()) {
@@ -40,30 +43,27 @@ public class Customer extends User implements Serializable{
 		}
 	}
 
-
-	
 	@Override
 	public void Serialize() {
 		try {
 			String fileName = "serialized/Serialized-CUSTOMERS.txt";
 			serialize.Serialization.Update(getCustomerList(), fileName);
-		} catch(Exception e2) {
-			System.out.println("ERROR Serialize() v Customer");
-			e2.printStackTrace();
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR Serialize() v Customer", e);
 		} 
 	}
-	
 
-	
+	@Override
 	public void GetTime() {
-		
+		// overwrites a parent function (polymorphism)
 	}
-	
+
+	@Override
 	public void addDepositToCredit(Order order) {
 		this.setCredit(order.getDeposit() + this.getCredit());
 	}
 
-
+	@Override
 	public void LogInSpecific(boolean b) {
 		this.LoginController.StartCustomerSession(b);
 	}
@@ -77,17 +77,18 @@ public class Customer extends User implements Serializable{
 		return newCustomer;
 	}
 
+	@Override
 	public void AddToBanList(User customer) {
 		banList.add(customer.getID());
 	}
-	
+
+	@Override
 	public void SerializeBanList() {
 		try {
 			String fileName = "serialized/Serialized-BANLIST.txt";
 			serialize.Serialization.Update(getBanList(), fileName);
-		} catch(Exception e2) {
-			System.out.println("ERROR SerializeBanList() v Customer");
-			e2.printStackTrace();
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE, "ERROR SerializeBanList() v Customer", e);
 		} 
 	}
 	
@@ -99,15 +100,11 @@ public class Customer extends User implements Serializable{
 			}
 			return -1;
 		}catch (Exception e) {
-			System.out.println("Error FindCustomerIndex() v Customer");
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error FindCustomerIndex() v Customer", e);
 			return -1;
 		}
 	}
-	
-	
-	
-	
+
 	
 	public static ArrayList<User> getCustomerList(){
 		return customers;
@@ -121,6 +118,4 @@ public class Customer extends User implements Serializable{
 	public static void setBanList(ArrayList<String> list){
 		banList = list;
 	}
-	
-
 }

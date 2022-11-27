@@ -2,7 +2,6 @@ package view;
 
 import java.util.ArrayList;
 import controllers.CustomerController;
-import view.LoginView;
 import controllers.LoginController;
 import controllers.ReturnCarController;
 import javafx.application.Application;
@@ -13,9 +12,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CustomerView extends Application{
-	
+
+	public static final Logger LOGGER = Logger.getLogger(CustomerView.class.getName());
+
 	public CustomerController ControllerForCustomer = new CustomerController();
 	public LoginView ViewForLogin = new LoginView();
 	public LoginController ControllerForLogin = new LoginController();
@@ -30,7 +33,7 @@ public class CustomerView extends Application{
 	public Label IDLb = new Label("");
 	public Label IDLb2 = new Label("ID: ");
 	public Label CredtidLb = new Label("");
-	public Label CredtidLb2 = new Label("Credit [€]: ");
+	public static final Label CreditLb2 = new Label("Credit [â‚¬]: ");
 	public Label CustomerLabe2 = new Label("Customer2");
 	public TextField OrderTf = new TextField();
 	public Pane pane = new Pane();	
@@ -43,6 +46,7 @@ public class CustomerView extends Application{
 	public Label DaysLeft2 = new Label("DaysLeft:");
 	public Label NoCarLb = new Label("You don't have a rented car");
 	public static Label HiddenIDLb = new Label();
+	static final String FONT = "Cambria";
 
 	
 	private void setLayout() {	
@@ -51,57 +55,57 @@ public class CustomerView extends Application{
 		CustomerLabel.setLayoutY(30);
 		CustomerLabel.setMinWidth(100);
 		CustomerLabel.setMinHeight(30);
-		CustomerLabel.setFont(new Font("Cambria", 28));
+		CustomerLabel.setFont(new Font(FONT, 28));
 		CustomerLabel.setVisible(false);
 		
 		CustomerLabe2.setLayoutX(420);
 		CustomerLabe2.setLayoutY(30);
 		CustomerLabe2.setMinWidth(100);
 		CustomerLabe2.setMinHeight(30);
-		CustomerLabe2.setFont(new Font("Cambria", 20));
+		CustomerLabe2.setFont(new Font(FONT, 20));
 		CustomerLabe2.setVisible(false);
 		
 		NameLb.setLayoutX(137);
 		NameLb.setLayoutY(30);
 		NameLb.setMinWidth(100);
 		NameLb.setMinHeight(30);
-		NameLb.setFont(new Font("Cambria", 23));
+		NameLb.setFont(new Font(FONT, 23));
 		
 		NameLb2.setLayoutX(75);
 		NameLb2.setLayoutY(30);
 		NameLb2.setMinWidth(100);
 		NameLb2.setMinHeight(30);
-		NameLb2.setFont(new Font("Cambria", 18));
+		NameLb2.setFont(new Font(FONT, 18));
 		
 		IDLb.setLayoutX(137);
 		IDLb.setLayoutY(70);
 		IDLb.setMinWidth(100);
 		IDLb.setMinHeight(30);
-		IDLb.setFont(new Font("Cambria", 23));
+		IDLb.setFont(new Font(FONT, 23));
 		
 		IDLb2.setLayoutX(102);
 		IDLb2.setLayoutY(70);
 		IDLb2.setMinWidth(100);
 		IDLb2.setMinHeight(30);
-		IDLb2.setFont(new Font("Cambria", 18));
+		IDLb2.setFont(new Font(FONT, 18));
 		
 		CredtidLb.setLayoutX(137);
 		CredtidLb.setLayoutY(110);
 		CredtidLb.setMinWidth(100);
 		CredtidLb.setMinHeight(30);
-		CredtidLb.setFont(new Font("Cambria", 23));
+		CredtidLb.setFont(new Font(FONT, 23));
 		
-		CredtidLb2.setLayoutX(45);
-		CredtidLb2.setLayoutY(110);
-		CredtidLb2.setMinWidth(100);
-		CredtidLb2.setMinHeight(30);
-		CredtidLb2.setFont(new Font("Cambria", 18));
+		CreditLb2.setLayoutX(45);
+		CreditLb2.setLayoutY(110);
+		CreditLb2.setMinWidth(100);
+		CreditLb2.setMinHeight(30);
+		CreditLb2.setFont(new Font(FONT, 18));
 		
 		OrderTf.setLayoutX(30);
 		OrderTf.setLayoutY(175);
 		OrderTf.setMinWidth(640);
 		OrderTf.setMinHeight(120);
-		OrderTf.setFont(new Font("Cambria", 18));
+		OrderTf.setFont(new Font(FONT, 18));
 		OrderTf.setEditable(false);
 		OrderTf.setVisible(false);
 		
@@ -109,46 +113,46 @@ public class CustomerView extends Application{
 		CancelOrderBtn.setLayoutY(355);
 		CancelOrderBtn.setMinWidth(80);
 		CancelOrderBtn.setMinHeight(30);
-		CancelOrderBtn.setFont(new Font("Cambria", 20));
+		CancelOrderBtn.setFont(new Font(FONT, 20));
 		CancelOrderBtn.setVisible(false);
 		
 		ReturnCarBtn.setLayoutX(215);
 		ReturnCarBtn.setLayoutY(250);
 		ReturnCarBtn.setMinWidth(80);
 		ReturnCarBtn.setMinHeight(30);
-		ReturnCarBtn.setFont(new Font("Cambria", 20));
+		ReturnCarBtn.setFont(new Font(FONT, 20));
 		ReturnCarBtn.setVisible(true);
 		
 		BackBtn.setLayoutX(50);
 		BackBtn.setLayoutY(250);
 		BackBtn.setMinWidth(80);
 		BackBtn.setMinHeight(30);
-		BackBtn.setFont(new Font("Cambria", 20));
+		BackBtn.setFont(new Font(FONT, 20));
 		
 		DaysLeft.setLayoutX(137);
 		DaysLeft.setLayoutY(190);
 		DaysLeft.setMinWidth(100);
 		DaysLeft.setMinHeight(30);
-		DaysLeft.setFont(new Font("Cambria", 23));
+		DaysLeft.setFont(new Font(FONT, 23));
 		
 		DaysLeft2.setLayoutX(51);
 		DaysLeft2.setLayoutY(190);
 		DaysLeft2.setMinWidth(100);
 		DaysLeft2.setMinHeight(30);
-		DaysLeft2.setFont(new Font("Cambria", 18));
+		DaysLeft2.setFont(new Font(FONT, 18));
 		DaysLeft2.setVisible(true);
 		
 		CarLb.setLayoutX(137);
 		CarLb.setLayoutY(150);
 		CarLb.setMinWidth(100);
 		CarLb.setMinHeight(30);
-		CarLb.setFont(new Font("Cambria", 23));
+		CarLb.setFont(new Font(FONT, 23));
 		
 		CarLb2.setLayoutX(93);
 		CarLb2.setLayoutY(150);
 		CarLb2.setMinWidth(100);
 		CarLb2.setMinHeight(30);
-		CarLb2.setFont(new Font("Cambria", 18));
+		CarLb2.setFont(new Font(FONT, 18));
 		CarLb2.setVisible(true);
 		
 		HiddenIDLb.setLayoutX(10);
@@ -162,7 +166,7 @@ public class CustomerView extends Application{
 		NoCarLb.setLayoutY(180);
 		NoCarLb.setMinWidth(100);
 		NoCarLb.setMinHeight(30);
-		NoCarLb.setFont(new Font("Cambria", 24));
+		NoCarLb.setFont(new Font(FONT, 24));
 		NoCarLb.setVisible(false);
 		
 	}
@@ -175,7 +179,7 @@ public class CustomerView extends Application{
 		pane.getChildren().add(IDLb);
 		pane.getChildren().add(IDLb2);
 		pane.getChildren().add(CredtidLb);
-		pane.getChildren().add(CredtidLb2);
+		pane.getChildren().add(CreditLb2);
 		pane.getChildren().add(OrderTf);
 		pane.getChildren().add(CancelOrderBtn);
 		pane.getChildren().add(ReturnCarBtn);
@@ -212,10 +216,9 @@ public class CustomerView extends Application{
 				ViewForLogin.ResetLayout();
 				primaryStage.close();
 				} catch(Exception e2) {
-					System.out.println("ERROR BackBtn v CustomerView");
-					e2.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR BackBtn v CustomerView", e2);
 				}
-				
+
 			});
 			
 			ReturnCarBtn.setOnAction(e -> {
@@ -228,16 +231,14 @@ public class CustomerView extends Application{
 				ViewForLogin.ResetLayout();
 
 				} catch(Exception e2) {
-					System.out.println("ERROR ReturnCarBtn v CustomerView");
-					e2.printStackTrace();
+					LOGGER.log(Level.SEVERE, "ERROR ReturnCarBtn v CustomerView", e2);
 				}
-				
 			});
 			
 			
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "", e);
 		} 	
 		
 	}

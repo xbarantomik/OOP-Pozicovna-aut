@@ -13,12 +13,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class LoginView extends Application implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	public static final Logger LOGGER = Logger.getLogger(LoginView.class.getName());
 	private LoginController ControllerForLogin = new LoginController();
 	
 	transient Label WelcomeLb = new Label("Login");
@@ -33,7 +35,8 @@ public class LoginView extends Application implements Serializable{
 	transient Button CustomerArrayPrintOutBtn = new Button("C");
 	transient Button STB = new Button("O");
 	transient Button EpmBtn = new Button("E");
-	transient Pane pane = new Pane();	
+	transient Pane pane = new Pane();
+	static final String FONT = "Cambria";
 
 	private void setLayout() {
 		
@@ -42,27 +45,27 @@ public class LoginView extends Application implements Serializable{
 		WelcomeLb.setLayoutY(30);
 		WelcomeLb.setMinWidth(100);
 		WelcomeLb.setMinHeight(40);
-		WelcomeLb.setFont(new Font("Cambria", 35));
+		WelcomeLb.setFont(new Font(FONT, 35));
 		
 		BanListWLb.setLayoutX(52);
 		BanListWLb.setLayoutY(238);
 		BanListWLb.setMinWidth(100);
 		BanListWLb.setMinHeight(40);
-		BanListWLb.setFont(new Font("Cambria", 23));
+		BanListWLb.setFont(new Font(FONT, 23));
 		BanListWLb.setVisible(false);
 		
 		EmpLogLb.setLayoutX(116);
 		EmpLogLb.setLayoutY(428);
 		EmpLogLb.setMinWidth(100);
 		EmpLogLb.setMinHeight(40);
-		EmpLogLb.setFont(new Font("Cambria", 18));
+		EmpLogLb.setFont(new Font(FONT, 18));
 		EmpLogLb.setVisible(false);		
 		
 		CustomerLoginBtn.setLayoutX(110);
 		CustomerLoginBtn.setLayoutY(150);
 		CustomerLoginBtn.setMinWidth(180);
 		CustomerLoginBtn.setMinHeight(30);
-		CustomerLoginBtn.setFont(new Font("Cambria", 20));
+		CustomerLoginBtn.setFont(new Font(FONT, 20));
 		CustomerLoginBtn.setVisible(true);
 		
 		CustomerIDTf.setLayoutX(110);
@@ -75,7 +78,7 @@ public class LoginView extends Application implements Serializable{
 		EmployeeLoginBtn.setLayoutY(300);
 		EmployeeLoginBtn.setMinWidth(180);
 		EmployeeLoginBtn.setMinHeight(30);
-		EmployeeLoginBtn.setFont(new Font("Cambria", 20));
+		EmployeeLoginBtn.setFont(new Font(FONT, 20));
 		EmployeeLoginBtn.setVisible(true);
 		
 		EmployeePasswordPf.setLayoutX(110);
@@ -94,33 +97,31 @@ public class LoginView extends Application implements Serializable{
 		EmployeeLoginLb.setLayoutY(440);
 		EmployeeLoginLb.setMinWidth(180);
 		EmployeeLoginLb.setMinHeight(30);
-		EmployeeLoginLb.setFont(new Font("Cambria", 20));
+		EmployeeLoginLb.setFont(new Font(FONT, 20));
 		EmployeeLoginLb.setVisible(false);
 		
 		CustomerArrayPrintOutBtn.setLayoutX(0);
 		CustomerArrayPrintOutBtn.setLayoutY(460);
 		CustomerArrayPrintOutBtn.setMaxWidth(20);
 		CustomerArrayPrintOutBtn.setMinHeight(20);
-		CustomerArrayPrintOutBtn.setFont(new Font("Cambria", 12));
+		CustomerArrayPrintOutBtn.setFont(new Font(FONT, 12));
 		CustomerArrayPrintOutBtn.setVisible(false);
 		
 		STB.setLayoutX(0);
 		STB.setLayoutY(430);
 		STB.setMaxWidth(20);
 		STB.setMinHeight(20);
-		STB.setFont(new Font("Cambria", 12));
+		STB.setFont(new Font(FONT, 12));
 		STB.setVisible(false);	
 		
 		EpmBtn.setLayoutX(0);
 		EpmBtn.setLayoutY(400);
 		EpmBtn.setMaxWidth(20);
 		EpmBtn.setMinHeight(20);
-		EpmBtn.setFont(new Font("Cambria", 12));
-		EpmBtn.setVisible(false);	
-
-		
-	
+		EpmBtn.setFont(new Font(FONT, 12));
+		EpmBtn.setVisible(false);
 	}
+
 	private void registerChildren()
 	{
 		pane.getChildren().add(EmployeePasswordPf);
@@ -136,8 +137,7 @@ public class LoginView extends Application implements Serializable{
 		pane.getChildren().add(STB);
 		pane.getChildren().add(EpmBtn);
 	}
-	
-	
+
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -153,7 +153,7 @@ public class LoginView extends Application implements Serializable{
 		primaryStage.setOnCloseRequest(e -> Platform.exit());
 		
 		} catch(Exception e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "", e);
 		} 
 		
 		
@@ -161,8 +161,7 @@ public class LoginView extends Application implements Serializable{
 			try {
 				utils.StaticDb.CustomersArrayPrintOut();
 			}catch(Exception e2) {
-				System.out.println("ERROR CustomerArrayPrintOutBtn v loginView");
-				e2.printStackTrace();
+				LOGGER.log(Level.SEVERE, "ERROR CustomerArrayPrintOutBtn v loginView", e2);
 			}
 		});
 	
@@ -170,8 +169,7 @@ public class LoginView extends Application implements Serializable{
 			try {
 				LoginController.OrderArrayPrintOut();
 			}catch(Exception e2) {
-				System.out.println("ERROR STB button v loginView");
-				e2.printStackTrace();
+				LOGGER.log(Level.SEVERE, "ERROR STB button v loginView", e2);
 			}
 		});
 		
@@ -179,8 +177,7 @@ public class LoginView extends Application implements Serializable{
 			try {
 				LoginController.EmployeeArrayPrintOut();
 			}catch(Exception e2) {
-				System.out.println("ERROR EpmBtn v loginView");
-				e2.printStackTrace();
+				LOGGER.log(Level.SEVERE, "ERROR EpmBtn v loginView", e2);
 			}
 		});
 		
@@ -189,25 +186,17 @@ public class LoginView extends Application implements Serializable{
 				BanListWLb.setVisible(false);
 				ControllerForLogin.TryLoginCustomer(CustomerIDTf.getText());
 			}catch(Exception e2) {
-				System.out.println("ERROR CustomerLoginBtn v loginView");
-				e2.printStackTrace();
+				LOGGER.log(Level.SEVERE, "ERROR CustomerLoginBtn v loginView", e2);
 			}
-			
-			
 		});
 		
 		EmployeeLoginBtn.setOnAction(e -> {
 			try {
 			ControllerForLogin.TryLoginEmployee(EmployeeLoginTf.getText(), EmployeePasswordPf.getText());
 			}catch(Exception e2) {
-				System.out.println("ERROR EmployeeLoginBtn v loginView");
-				e2.printStackTrace();
+				LOGGER.log(Level.SEVERE, "ERROR EmployeeLoginBtn v loginView", e2);
 			}
-
 		});
-		
-		
-		
 	}
 	
 	public void UpdateAfterLogin() {
@@ -220,7 +209,6 @@ public class LoginView extends Application implements Serializable{
 		this.pane.setVisible(true);		
 	}
 	
-		
 
 	public Label getEmployeeLoginLb() {
 		return EmployeeLoginLb;
@@ -246,10 +234,6 @@ public class LoginView extends Application implements Serializable{
 	public static void setCustomerIDTf(String string) {
 		CustomerIDTf.setText(string);
 	}
-
-	
-	
-	
 
 	public static void main(String[] args) {
 		launch(args);
